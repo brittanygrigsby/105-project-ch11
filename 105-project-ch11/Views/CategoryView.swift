@@ -9,7 +9,22 @@ import SwiftUI
 
 struct CategoryView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(spacing:20){
+            Image(systemName: "progress.indicator")
+                .font(.largeTitle)
+                .padding()
+                .foregroundStyle(.white)
+            
+            Text("Category Details")
+                .font(.largeTitle)
+                .foregroundStyle(.white)
+            
+            Text("Under Construction...")
+                .foregroundStyle(.white)
+                
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color("BackgroundColor"))
     }
 }
 

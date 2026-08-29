@@ -41,16 +41,18 @@ struct SpecialistView: View {
                             
                             NavigationLink(destination:AllCategoriesView()){
                                 Text("See All")
-                                    .foregroundStyle(Color.white)
+                                    .foregroundStyle(Color("BackgroundColor"))
                                     .bold()
                             }
                         }
                         
                         ScrollView(.horizontal, showsIndicators: false){
                             HStack(spacing:20){
-                                CategoryCardView()
-                                CategoryCardView()
-                                CategoryCardView()
+                                CategoryCardView(icon:"hand.raised", category:"Nails", destination: CategoryView())
+                                CategoryCardView(icon:"eye", category:"Lashes", destination: CategoryView())
+                                CategoryCardView(icon:"wind", category:"Hair", destination: CategoryView())
+                                CategoryCardView(icon:"face.smiling", category:"Facial", destination: CategoryView())
+
                             }
                         }
                         
@@ -63,10 +65,13 @@ struct SpecialistView: View {
                         
                         ScrollView(.vertical, showsIndicators: false){
                             VStack(spacing:20){
-                                SpecialistCardView()
-                                SpecialistCardView()
-                                SpecialistCardView()
-                                SpecialistCardView()
+                                
+                                ForEach(Specialist.mocks, id:\.name){specialist in
+                                    
+                                    SpecialistCardView(specialist: specialist)
+                                    
+                                } //For Each
+                                
                                 
                             }
                         }

@@ -7,33 +7,45 @@
 
 import SwiftUI
 
-struct CategoryCardView: View {
+struct CategoryCardView<Destination: View>: View {
+    
+    let icon: String
+    let category: String
+    let destination: Destination
+    
     var body: some View {
-        VStack{
-            ZStack{
-                Circle()
-                    .frame(width:80, height:80)
-                    .foregroundStyle(Color("BackgroundColor"))
+        
+        NavigationLink {
+            //Navigates to?
+            destination
+        }label : {
+            
+            VStack(spacing:8){
                 
-                Image(systemName:"eye")
+                Image(systemName:icon)
                     .resizable()
                     .scaledToFill()
-                    .frame(width:40, height:40)
-                    .foregroundStyle(Color.white)
+                    .frame(width:20, height:20)
+                    .padding()
+                    .background(Color("BackgroundColor"))
+                    .clipShape(.circle)
+                    .foregroundStyle(Color("SurfaceColor"))
                 
                 
+                Text(category)
+                    .font(.headline)
+                    .foregroundStyle(.black)
                 
             }
-            
-            Text("Haircut")
+            .frame(width:100, height:100)
+            .background(.white)
+            .cornerRadius(20)
         }
-        .frame(width:100, height:100)
-        .padding(10)
-        .background(.white)
-        .cornerRadius(20)
-    }
-}
+        .accessibilityLabel(Text(category))
+        .accessibilityHint(Text("Displaying the \(category) page."))
+    }//END:body
+}//END:CategoryCardView
 
 #Preview {
-    CategoryCardView()
+    CategoryCardView(icon: "eye", category: "Lashes", destination: CategoryView())
 }
