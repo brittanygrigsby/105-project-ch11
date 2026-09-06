@@ -60,7 +60,7 @@ struct SpecialistCardView: View {
                 .lineLimit(isExpanded ? nil : 2)
                 .font(.callout)
             
-            Text("See more")
+            Text(isExpanded ? "See Less" : "See More")
                 .font(.headline)
                 .foregroundStyle(Color("BackgroundColor"))
                 .onTapGesture {
