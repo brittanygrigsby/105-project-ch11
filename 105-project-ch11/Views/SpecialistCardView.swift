@@ -12,8 +12,89 @@ struct SpecialistCardView: View {
     //let icon: String
     let specialist: Specialist
     
+    @State private var isExpanded: Bool = false
+    @State private var isLiked: Bool = false
+    
     var body: some View {
-        HStack{
+        //MARK: new card
+        VStack(alignment: .leading, spacing:10){
+            HStack(alignment: .top){
+                Image(systemName: specialist.image)
+                    .resizable( )
+                    .scaledToFit()
+                    .frame(width: 40, height:40)
+                    .clipShape(Circle())
+                    .foregroundStyle(Color("BackgroundColor"))
+                VStack(alignment:.leading, spacing:4){
+                    //Specialist Name
+                    Text(specialist.name)
+                        .font(.headline)
+                        .foregroundStyle(Color("BackgroundColor"))
+                    
+                    //Specialty Category
+                    Text(specialist.specialty)
+                        .font(.subheadline)
+                    
+                    //Rating
+                    HStack(alignment: .center){
+                        Image(systemName: "star.fill")
+                            .foregroundStyle(.yellow)
+                            .font(.caption)
+                        
+                        Text(String(specialist.rating))
+                            .font(.caption)
+                        
+                    }
+                }
+                Spacer()
+                
+                Image(systemName: isLiked ? "heart.fill" : "heart")
+                    .foregroundStyle(isLiked ? .red : .gray)
+                    .padding()
+                    .onTapGesture(count:2){
+                        isLiked.toggle()
+                    }
+            }
+            
+            Text(specialist.description)
+                .lineLimit(isExpanded ? nil : 2)
+                .font(.callout)
+            
+            Text("See more")
+                .font(.headline)
+                .foregroundStyle(Color("BackgroundColor"))
+                .onTapGesture {
+                    isExpanded.toggle()
+                }
+
+            
+            HStack{
+                //Price range -
+                Text("$\(specialist.minPrice, specifier: "%.2f") - $\(specialist.maxPrice, specifier: "%.2f") ")
+                    .font(.footnote)
+                    .bold()
+                
+                Spacer()
+                
+                NavigationLink(destination:BookAppointmentView()){
+                    Text("Book")
+                        .padding(.vertical, 6)
+                        .padding(.horizontal, 12)
+                        .background(Color("BackgroundColor"))
+                        .foregroundStyle(.white)
+                        .cornerRadius(10)
+                    
+                    
+                }
+            }
+            
+        }//End VStack
+        .padding()
+        .background(.white)
+        .cornerRadius(14)
+        
+        // MARK: old card
+        /*HStack{
             Image(systemName: specialist.image)
                 .resizable()
                 .scaledToFit()
@@ -32,46 +113,46 @@ struct SpecialistCardView: View {
                 Text("$\(specialist.minPrice, specifier: "%.2f") - $\(specialist.maxPrice, specifier: "%.2f") ")
                     .font(.footnote)
                     .bold()
+
+                Spacer()
                 
-            }
-            Spacer()
-            
-            VStack{
-                //Rating display
-                HStack{
-                    // Specialist Icon
-                    Image(systemName: "star.fill")
-                        .foregroundColor(.yellow)
-                        .font(.caption)
+                VStack{
+                    //Rating display
+                    HStack{
+                        // Specialist Icon
+                        Image(systemName: "star.fill")
+                            .foregroundColor(.yellow)
+                            .font(.caption)
+                        
+                        Text(String(specialist.rating))
+                            .font(.caption)
+                    }
                     
-                    Text(String(specialist.rating))
-                        .font(.caption)
+                    //Navigation to booking screen
+                    NavigationLink(destination:BookAppointmentView()){
+                        Text("Book")
+                        
+                            .padding(.vertical, 6)
+                            .padding(.horizontal, 12)
+                            .background(Color("BackgroundColor"))
+                            .foregroundStyle(.white)
+                            .cornerRadius(10)
+                            .accessibilityElement(children: .ignore)
+                            .accessibilityLabel("Booking Screen")
+                            .accessibilityHint("Booking an appointment with \(specialist.name)")
+                        
+                    }
+                    //Card styling
+                    .padding()
+                    .background(Color.white)
+                    .cornerRadius(14)
+                    
                 }
                 
-                //Navigation to booking screen
-                NavigationLink(destination:BookAppointmentView()){
-                    Text("Book")
-                }
-                .padding(.vertical, 6)
-                .padding(.horizontal, 12)
-                .background(Color("BackgroundColor"))
-                .foregroundStyle(.white)
-                .cornerRadius(10)
-                .accessibilityElement(children: .ignore)
-                .accessibilityLabel("Booking Screen")
-                .accessibilityHint("Booking an appointment with \(specialist.name)")
             }
-        }
-        //Card styling
-        .padding()
-        .background(Color.white)
-        .cornerRadius(14)
-
+        }*/
     }
-
-    }
-
-
+}
 #Preview {
     SpecialistCardView(
         specialist: Specialist(
@@ -80,6 +161,7 @@ struct SpecialistCardView: View {
             minPrice: 100,
             maxPrice: 200,
             rating: 4.8,
-            image: "person")
+            image: "person",
+        description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis ante ac dui laoreet tempus. Donec nec consectetur nisl. Duis porta scelerisque eros ut egestas. Duis suscipit dignissim risus, eu cursus dolor vulputate nec. Mauris vel aliquet purus.")
     )
 }
