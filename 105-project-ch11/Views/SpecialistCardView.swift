@@ -51,9 +51,7 @@ struct SpecialistCardView: View {
                 Image(systemName: isLiked ? "heart.fill" : "heart")
                     .foregroundStyle(isLiked ? .red : .gray)
                     .padding()
-                    .onTapGesture(count:2){
-                        isLiked.toggle()
-                    }
+
             }
             
             Text(specialist.description)
@@ -92,7 +90,9 @@ struct SpecialistCardView: View {
         .padding()
         .background(.white)
         .cornerRadius(14)
-        
+        .onTapGesture(count:2){
+            isLiked.toggle()
+        }
         // MARK: old card
         /*HStack{
             Image(systemName: specialist.image)
